@@ -51,4 +51,42 @@ app.mount("#app");
 
 .mount() 方法应该始终在整个应用配置和资源注册完成后被调用。同时请注意，不同于其他资源注册方法，它的返回值是根组件实例而非应用实例。
 
+### 应用配置​
+应用实例会暴露一个 .config 对象允许我们配置一些应用级的选项，例如定义一个应用级的错误处理器，用来捕获所有子组件上的错误：
+
+```js
+app.config.errorHandler = (err) => {
+  /* 处理错误 */
+}
+```
+应用实例还提供了一些方法来注册应用范围内可用的资源，例如注册一个组件：
+
+```js
+app.component('TodoDeleteButton', TodoDeleteButton)
+```
+
+确保在挂载应用实例之前完成所有应用配置！
+
 ## 模板语法
+> Vue 使用一种基于 HTML 的模板语法，使我们能够声明式地将其组件实例的数据绑定到呈现的 DOM 上。所有的 Vue 模板都是语法层面合法的 HTML，可以被符合规范的浏览器和 HTML 解析器解析。
+
+### 文本插值
+最基本的数据绑定形式是文本插值，它使用的是“Mustache”语法 (即双大括号)：
+```template
+<span>Message: {{ msg }}</span>
+```
+双大括号标签会被替换为相应组件实例中 msg 属性的值。同时每次 msg 属性更改时它也会同步更新。
+
+### Attribute 绑定​
+双大括号不能在 HTML attributes 中使用。想要响应式地绑定一个 attribute，应该使用 v-bind 指令：
+
+```template
+<div v-bind:id="dynamicId"></div>
+```
+v-bind 指令指示 Vue 将元素的 id attribute 与组件的 dynamicId 属性保持一致。如果绑定的值是 null 或者 undefined，那么该 attribute 将会从渲染的元素上移除。
+
+因为 v-bind 非常常用，我们提供了特定的简写语法：
+```template
+<div :id="dynamicId"></div>
+```
+开头为 : 的 attribute 可能和一般的 HTML attribute 看起来不太一样，但它的确是合法的 attribute 名称字符，并且所有支持 Vue 的浏览器都能正确解析它。
