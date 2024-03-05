@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">  
+  <head>  
+    <meta charset="UTF-8" />  
+    <title>第一个Vue.js程序</title>  
+  </head>  
+  <body>  
+    <div id="app">  
+      <h1>{{message}}</h1>  
+    </div>
+    <!-- 从vue3加载一个Vue全局 -->
+    <script src="https://unpkg.com/vue@3"></script>
+    <script type="text/javascript">  
+      // 创建应用程序实例  
+      const vm = Vue.createApp({  
+        // 返回数据对象  
+        data() {  
+          return {  
+            message: "hello,vue.js",  
+          };  
+        },  
+        // 装载应用程序实例的根组件  
+      }).mount("#app");  
+    </script>  
+  </body>  
+</html>
